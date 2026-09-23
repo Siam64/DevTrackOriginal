@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "KTb9ReF7iAo=",
+  "success": true,
+  "projectFilePath": "E:\\Samiul Alim\\Project\\DevTrackGit\\DevTrack.Infrastructure\\DevTrack.Infrastructure.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\siama\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.11\\microsoft.aspnetcore.openapi.10.0.11.nupkg.sha512",
+    "C:\\Users\\siama\\.nuget\\packages\\microsoft.openapi\\2.7.5\\microsoft.openapi.2.7.5.nupkg.sha512"
+  ],
+  "logs": []
+}

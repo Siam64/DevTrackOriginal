@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="../DevTrack.Application/DevTrack.Application.csproj" Id="88d4bdf4-20e6-4cce-86fa-721a0e0b6f72" />
+  <Project Path="../DevTrack.Common/DevTrack.Common.csproj" Id="92d50b2e-614b-4d81-8c7c-1e204f39ef7e" />
+  <Project Path="../DevTrack.Domain/DevTrack.Domain.csproj" Id="b8a4f774-fe6c-48f5-a80f-41615a56ceb5" />
+  <Project Path="../DevTrack.Infrastructure/DevTrack.Infrastructure.csproj" Id="44cfb972-e2e3-47fc-bedb-26aa6c863bf0" />
+  <Project Path="DevTrack.csproj" />
+</Solution>
