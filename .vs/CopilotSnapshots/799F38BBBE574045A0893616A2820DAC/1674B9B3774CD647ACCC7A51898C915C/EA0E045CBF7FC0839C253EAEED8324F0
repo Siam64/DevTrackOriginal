@@ -1,0 +1,22 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace DevTrack.Domain.Entities
+{
+    public class Issue
+    {
+        public int ID { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Priority { get; set; }
+        public string Status { get; set; }
+        public int CreatedByID { get; set; }
+        public int AssignedToID { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime AssignedAt { get; set; }
+        public DateTime StartedAt { get; set; }
+        public DateTime ResolvedAt { get; set; }
+        public DateTime ClosedAt { get; set; }
+
+    }
+}

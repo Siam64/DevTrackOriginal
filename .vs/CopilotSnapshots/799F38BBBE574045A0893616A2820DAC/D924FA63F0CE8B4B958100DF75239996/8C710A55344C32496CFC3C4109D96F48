@@ -1,0 +1,127 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using DevTrack.Domain.Entities;
+
+namespace DevTrack.Infrastructure.Persistence.Configuration
+{
+    /// <summary>
+    /// Entity Framework Core Fluent API configuration for the Issue entity.
+    /// Defines table mapping, column constraints, relationships, indexes, and other database configurations.
+    /// </summary>
+    public class IssueConfiguration : IEntityTypeConfiguration<Issue>
+    {
+        public void Configure(EntityTypeBuilder<Issue> builder)
+        {
+            // Table mapping
+            builder.ToTable("Issues", schema: "dbo");
+
+            // Primary key
+            builder.HasKey(i => i.Id);
+
+            // Identity column (auto-increment)
+            builder.Property(i => i.Id)
+                .ValueGeneratedOnAdd();
+
+            // Title - Required, max 255 chars
+            builder.Property(i => i.Title)
+                .IsRequired()
+                .HasMaxLength(255)
+                .HasColumnType("nvarchar(255)");
+
+            // Description - Optional, max 4000 chars
+            builder.Property(i => i.Description)
+                .HasMaxLength(4000)
+                .HasColumnType("nvarchar(max)");
+
+            // Priority - Stored as int (enum value)
+            builder.Property(i => i.Priority)
+                .IsRequired()
+                .HasConversion<int>()
+                .HasColumnType("int")
+                .HasDefaultValue(1); // Default to Normal (value = 1)
+
+            // Status - Stored as int (enum value)
+            builder.Property(i => i.Status)
+                .IsRequired()
+                .HasConversion<int>()
+                .HasColumnType("int")
+                .HasDefaultValue(0); // Default to New (value = 0)
+
+            // CreatedById - Required foreign key
+            builder.Property(i => i.CreatedById)
+                .IsRequired()
+                .HasColumnType("int");
+
+            // AssignedToId - Required foreign key
+            builder.Property(i => i.AssignedToId)
+                .IsRequired()
+                .HasColumnType("int");
+
+            // Timestamps - All required/optional as specified
+            builder.Property(i => i.CreatedAt)
+                .IsRequired()
+                .HasColumnType("datetime2")
+                .HasDefaultValueSql("GETUTCDATE()");
+
+            builder.Property(i => i.AssignedAt)
+                .HasColumnType("datetime2");
+
+            builder.Property(i => i.StartedAt)
+                .HasColumnType("datetime2");
+
+            builder.Property(i => i.ResolvedAt)
+                .HasColumnType("datetime2");
+
+            builder.Property(i => i.ClosedAt)
+                .HasColumnType("datetime2");
+
+            // Concurrency token
+            builder.Property(i => i.RowVersion)
+                .IsRowVersion()
+                .HasColumnType("rowversion");
+
+            // Foreign key relationships
+            builder.HasOne(i => i.CreatedBy)
+                .WithMany()
+                .HasForeignKey(i => i.CreatedById)
+                .OnDelete(DeleteBehavior.Restrict) // Prevent deletion of creator
+                .HasConstraintName("FK_Issues_Users_CreatedById");
+
+            builder.HasOne(i => i.AssignedTo)
+                .WithMany()
+                .HasForeignKey(i => i.AssignedToId)
+                .OnDelete(DeleteBehavior.SetNull) // Nullify assignment if user is deleted
+                .HasConstraintName("FK_Issues_Users_AssignedToId");
+
+            // Indexes for query performance
+            // Index on Status for common "Get issues by status" queries
+            builder.HasIndex(i => i.Status)
+                .HasDatabaseName("IX_Issues_Status");
+
+            // Index on AssignedToId for "Get my issues" queries
+            builder.HasIndex(i => i.AssignedToId)
+                .HasDatabaseName("IX_Issues_AssignedToId");
+
+            // Index on CreatedById for "Get issues created by user" queries
+            builder.HasIndex(i => i.CreatedById)
+                .HasDatabaseName("IX_Issues_CreatedById");
+
+            // Composite index for common filtering pattern (Status + AssignedToId)
+            builder.HasIndex(i => new { i.Status, i.AssignedToId })
+                .HasDatabaseName("IX_Issues_Status_AssignedToId");
+
+            // Composite index for high-priority issues assigned to specific user
+            builder.HasIndex(i => new { i.Priority, i.AssignedToId, i.Status })
+                .HasDatabaseName("IX_Issues_Priority_AssignedToId_Status");
+
+            // Index on CreatedAt for time-based queries
+            builder.HasIndex(i => i.CreatedAt)
+                .HasDatabaseName("IX_Issues_CreatedAt");
+
+            // Composite index for dashboard queries: recent issues for user
+            builder.HasIndex(i => new { i.AssignedToId, i.CreatedAt })
+                .IsDescending(false, true) // AssignedToId ascending, CreatedAt descending
+                .HasDatabaseName("IX_Issues_AssignedToId_CreatedAt_Desc");
+        }
+    }
+}

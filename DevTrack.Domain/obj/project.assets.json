@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Samiul Alim\\Project\\DevTrackGit\\DevTrack.Domain\\DevTrack.Domain.csproj",
+      "projectUniqueName": "E:\\Samiul Alim\\Project\\DevTrackOriginal\\DevTrackOriginal\\DevTrack.Domain\\DevTrack.Domain.csproj",
       "projectName": "DevTrack.Domain",
-      "projectPath": "E:\\Samiul Alim\\Project\\DevTrackGit\\DevTrack.Domain\\DevTrack.Domain.csproj",
+      "projectPath": "E:\\Samiul Alim\\Project\\DevTrackOriginal\\DevTrackOriginal\\DevTrack.Domain\\DevTrack.Domain.csproj",
       "packagesPath": "C:\\Users\\siama\\.nuget\\packages\\",
-      "outputPath": "E:\\Samiul Alim\\Project\\DevTrackGit\\DevTrack.Domain\\obj\\",
+      "outputPath": "E:\\Samiul Alim\\Project\\DevTrackOriginal\\DevTrackOriginal\\DevTrack.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

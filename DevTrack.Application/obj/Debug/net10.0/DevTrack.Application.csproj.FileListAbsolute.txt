@@ -1,0 +1,12 @@
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Application\bin\Debug\net10.0\DevTrack.Application.deps.json
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Application\bin\Debug\net10.0\DevTrack.Application.dll
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Application\bin\Debug\net10.0\DevTrack.Application.pdb
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Application\obj\Debug\net10.0\DevTrack.Application.GeneratedMSBuildEditorConfig.editorconfig
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Application\obj\Debug\net10.0\DevTrack.Application.AssemblyInfoInputs.cache
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Application\obj\Debug\net10.0\DevTrack.Application.AssemblyInfo.cs
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Application\obj\Debug\net10.0\DevTrack.Application.csproj.CoreCompileInputs.cache
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Application\obj\Debug\net10.0\DevTrack.Application.sourcelink.json
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Application\obj\Debug\net10.0\DevTrack.Application.dll
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Application\obj\Debug\net10.0\refint\DevTrack.Application.dll
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Application\obj\Debug\net10.0\DevTrack.Application.pdb
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Application\obj\Debug\net10.0\ref\DevTrack.Application.dll

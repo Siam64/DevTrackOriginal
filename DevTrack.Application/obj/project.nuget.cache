@@ -1,11 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RfIylhchIq8=",
+  "dgSpecHash": "aLC0k777jdE=",
   "success": true,
-  "projectFilePath": "E:\\Samiul Alim\\Project\\DevTrackGit\\DevTrack.Application\\DevTrack.Application.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\siama\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.11\\microsoft.aspnetcore.openapi.10.0.11.nupkg.sha512",
-    "C:\\Users\\siama\\.nuget\\packages\\microsoft.openapi\\2.7.5\\microsoft.openapi.2.7.5.nupkg.sha512"
-  ],
+  "projectFilePath": "E:\\Samiul Alim\\Project\\DevTrackOriginal\\DevTrackOriginal\\DevTrack.Application\\DevTrack.Application.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }

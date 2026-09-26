@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Samiul Alim\\Project\\DevTrackGit\\DevTrack.Common\\DevTrack.Common.csproj": {}
+    "E:\\Samiul Alim\\Project\\DevTrackOriginal\\DevTrackOriginal\\DevTrack.Common\\DevTrack.Common.csproj": {}
   },
   "projects": {
-    "E:\\Samiul Alim\\Project\\DevTrackGit\\DevTrack.Common\\DevTrack.Common.csproj": {
+    "E:\\Samiul Alim\\Project\\DevTrackOriginal\\DevTrackOriginal\\DevTrack.Common\\DevTrack.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Samiul Alim\\Project\\DevTrackGit\\DevTrack.Common\\DevTrack.Common.csproj",
+        "projectUniqueName": "E:\\Samiul Alim\\Project\\DevTrackOriginal\\DevTrackOriginal\\DevTrack.Common\\DevTrack.Common.csproj",
         "projectName": "DevTrack.Common",
-        "projectPath": "E:\\Samiul Alim\\Project\\DevTrackGit\\DevTrack.Common\\DevTrack.Common.csproj",
+        "projectPath": "E:\\Samiul Alim\\Project\\DevTrackOriginal\\DevTrackOriginal\\DevTrack.Common\\DevTrack.Common.csproj",
         "packagesPath": "C:\\Users\\siama\\.nuget\\packages\\",
-        "outputPath": "E:\\Samiul Alim\\Project\\DevTrackGit\\DevTrack.Common\\obj\\",
+        "outputPath": "E:\\Samiul Alim\\Project\\DevTrackOriginal\\DevTrackOriginal\\DevTrack.Common\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

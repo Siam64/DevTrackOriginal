@@ -1,0 +1,196 @@
+﻿-- ============================================================================
+-- SQL Server CREATE TABLE Script for Issues Entity
+-- ============================================================================
+-- This script creates the Issues table for the DevTrack application.
+-- The Issues entity represents workflow items (tasks, tickets, issues) that
+-- progress through different stages and are assigned to users.
+--
+-- Generated from: DevTrack.Infrastructure.Persistence.Configuration.IssueConfiguration
+-- Target: SQL Server 2019+
+-- ============================================================================
+
+-- Create the Issues table
+CREATE TABLE [dbo].[Issues] (
+	-- Primary Key
+	[Id] INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
+
+	-- Issue Information
+	[Title] NVARCHAR(255) NOT NULL,
+	[Description] NVARCHAR(MAX) NOT NULL,
+
+	-- Priority and Status (stored as int, represents enum values)
+	[Priority] INT NOT NULL DEFAULT 1,        -- 0=Low, 1=Normal, 2=High, 3=Critical (default=Normal)
+	[Status] INT NOT NULL DEFAULT 0,          -- 0=New, 1=Assigned, 2=InProgress, 3=Resolved, 4=Closed, 5=OnHold, 6=Cancelled (default=New)
+
+	-- Foreign Keys to Users
+	[CreatedById] INT NOT NULL,                -- User who created this issue
+	[AssignedToId] INT NULL,                   -- User assigned to work on this issue (initially NULL)
+
+	-- Audit Timestamps (all stored in UTC)
+	[CreatedAt] DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
+	[AssignedAt] DATETIME2 NULL,               -- Set when issue is assigned
+	[StartedAt] DATETIME2 NULL,                -- Set when work begins
+	[ResolvedAt] DATETIME2 NULL,               -- Set when work is completed
+	[ClosedAt] DATETIME2 NULL,                 -- Set when issue is officially closed
+
+	-- Concurrency Control
+	[RowVersion] ROWVERSION NOT NULL,          -- Optimistic locking token, updated by SQL Server on each modification
+
+	-- Foreign Key Constraints
+	CONSTRAINT [FK_Issues_Users_CreatedById] 
+		FOREIGN KEY ([CreatedById]) 
+		REFERENCES [dbo].[Users]([ID]) 
+		ON DELETE RESTRICT,                    -- Prevent deletion of issue creator
+
+	CONSTRAINT [FK_Issues_Users_AssignedToId] 
+		FOREIGN KEY ([AssignedToId]) 
+		REFERENCES [dbo].[Users]([ID]) 
+		ON DELETE SET NULL                     -- If assigned user is deleted, clear assignment
+);
+
+-- ============================================================================
+-- Create Indexes for Query Performance
+-- ============================================================================
+
+-- Index 1: Lookup issues by status (for status-based filtering, dashboard views)
+CREATE NONCLUSTERED INDEX [IX_Issues_Status]
+	ON [dbo].[Issues] ([Status] ASC)
+	INCLUDE ([Id], [Title], [Priority], [CreatedAt]);
+
+-- Index 2: Lookup issues assigned to a user (for "My Issues" queries)
+CREATE NONCLUSTERED INDEX [IX_Issues_AssignedToId]
+	ON [dbo].[Issues] ([AssignedToId] ASC)
+	INCLUDE ([Id], [Title], [Status], [Priority], [CreatedAt]);
+
+-- Index 3: Lookup issues created by a user
+CREATE NONCLUSTERED INDEX [IX_Issues_CreatedById]
+	ON [dbo].[Issues] ([CreatedById] ASC)
+	INCLUDE ([Id], [Title], [Status], [Priority]);
+
+-- Index 4: Composite index for filtering by status AND assigned user
+-- Common pattern: "Get all open issues assigned to user X"
+CREATE NONCLUSTERED INDEX [IX_Issues_Status_AssignedToId]
+	ON [dbo].[Issues] ([Status] ASC, [AssignedToId] ASC)
+	INCLUDE ([Id], [Title], [Priority], [CreatedAt]);
+
+-- Index 5: Composite index for high-priority work items
+-- Common pattern: "Get high-priority issues assigned to user X that are in progress"
+CREATE NONCLUSTERED INDEX [IX_Issues_Priority_AssignedToId_Status]
+	ON [dbo].[Issues] ([Priority] ASC, [AssignedToId] ASC, [Status] ASC)
+	INCLUDE ([Id], [Title], [CreatedAt]);
+
+-- Index 6: Lookup issues by creation date (for time-series reports)
+CREATE NONCLUSTERED INDEX [IX_Issues_CreatedAt]
+	ON [dbo].[Issues] ([CreatedAt] ASC)
+	INCLUDE ([Id], [Title], [Status], [AssignedToId]);
+
+-- Index 7: Composite index for dashboard: recent issues for a specific user
+-- CreatedAt DESC for getting latest issues first
+-- Common pattern: "Get 10 most recent issues assigned to user X"
+CREATE NONCLUSTERED INDEX [IX_Issues_AssignedToId_CreatedAt_Desc]
+	ON [dbo].[Issues] ([AssignedToId] ASC, [CreatedAt] DESC)
+	INCLUDE ([Id], [Title], [Status], [Priority]);
+
+-- ============================================================================
+-- Example Queries and Their Index Usage
+-- ============================================================================
+
+-- Query 1: Get all open issues assigned to current user (uses IX_Issues_Status_AssignedToId)
+-- SELECT * FROM Issues WHERE AssignedToId = @userId AND Status IN (1, 2);
+
+-- Query 2: Get my issues sorted by creation date (uses IX_Issues_AssignedToId_CreatedAt_Desc)
+-- SELECT TOP 10 * FROM Issues WHERE AssignedToId = @userId ORDER BY CreatedAt DESC;
+
+-- Query 3: Get critical issues assigned to any user (uses IX_Issues_Priority_AssignedToId_Status)
+-- SELECT * FROM Issues WHERE Priority = 3 AND AssignedToId = @userId AND Status = 2;
+
+-- Query 4: Get issues by status for dashboard (uses IX_Issues_Status)
+-- SELECT COUNT(*) FROM Issues WHERE Status = @status;
+
+-- Query 5: Get issues created by user (uses IX_Issues_CreatedById)
+-- SELECT * FROM Issues WHERE CreatedById = @userId;
+
+-- ============================================================================
+-- Enum Value Reference
+-- ============================================================================
+
+-- WorkItemPriority enum values stored in [Priority] column:
+--   0 = Low
+--   1 = Normal (DEFAULT)
+--   2 = High
+--   3 = Critical
+
+-- WorkItemStatus enum values stored in [Status] column:
+--   0 = New (DEFAULT)
+--   1 = Assigned
+--   2 = InProgress
+--   3 = Resolved
+--   4 = Closed
+--   5 = OnHold
+--   6 = Cancelled
+
+-- ============================================================================
+-- Data Type Justification
+-- ============================================================================
+
+-- [Id]: INT IDENTITY - Standard surrogate key, supports up to 2.1 billion records
+-- [Title]: NVARCHAR(255) - Unicode support for international characters
+-- [Description]: NVARCHAR(MAX) - Flexible length for detailed descriptions
+-- [Priority], [Status]: INT - Enum values; ordinal comparison for sorting/filtering
+-- [CreatedById], [AssignedToId]: INT - Foreign key references to Users table
+-- [CreatedAt], [AssignedAt], [StartedAt], [ResolvedAt], [ClosedAt]: DATETIME2 - Precision to 100 nanoseconds
+-- [RowVersion]: ROWVERSION - Automatic concurrency control by SQL Server
+
+-- ============================================================================
+-- Notes for Database Administration
+-- ============================================================================
+
+-- 1. FOREIGN KEYS:
+--    - CreatedById: RESTRICT prevents deletion of users who created issues (maintains referential integrity)
+--    - AssignedToId: SET NULL allows deletion of users by clearing their assignments gracefully
+
+-- 2. CONCURRENCY:
+--    - RowVersion (ROWVERSION datatype) is automatically updated by SQL Server on each row modification
+--    - Use in application: SELECT current RowVersion on read, include in WHERE clause on update
+--    - Prevents lost updates in concurrent scenarios
+
+-- 3. AUDIT TRAIL:
+--    - CreatedAt: Set automatically to UTC time, never changes
+--    - AssignedAt, StartedAt, ResolvedAt, ClosedAt: Application should set based on business logic
+--    - All timestamps in UTC for consistency across time zones
+
+-- 4. DEFAULTS:
+--    - Priority defaults to Normal (1)
+--    - Status defaults to New (0)
+--    - CreatedAt defaults to current UTC time
+--    - This allows inserts with minimal required parameters
+
+-- 5. INDEXES:
+--    - 7 indexes optimized for common query patterns
+--    - Covering indexes include frequently selected columns to enable index-only scans
+--    - Composite indexes support both single-column and multi-column filters
+
+-- ============================================================================
+Id
+- Title
+- Description
+- Priority
+- Status
+- CreatedById
+- AssignedToId
+- CreatedAt
+- AssignedAt
+- StartedAt
+- ResolvedAt
+- ClosedAtId
+- Title
+- Description
+- Priority
+- Status
+- CreatedById
+- AssignedToId
+- CreatedAt
+- AssignedAt
+- StartedAt
+- ResolvedAt
+- ClosedAt

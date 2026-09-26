@@ -1,0 +1,12 @@
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Domain\obj\Debug\net10.0\DevTrack.Domain.GeneratedMSBuildEditorConfig.editorconfig
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Domain\obj\Debug\net10.0\DevTrack.Domain.AssemblyInfoInputs.cache
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Domain\obj\Debug\net10.0\DevTrack.Domain.AssemblyInfo.cs
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Domain\obj\Debug\net10.0\DevTrack.Domain.csproj.CoreCompileInputs.cache
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Domain\obj\Debug\net10.0\DevTrack.Domain.sourcelink.json
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Domain\bin\Debug\net10.0\DevTrack.Domain.deps.json
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Domain\bin\Debug\net10.0\DevTrack.Domain.dll
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Domain\bin\Debug\net10.0\DevTrack.Domain.pdb
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Domain\obj\Debug\net10.0\DevTrack.Domain.dll
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Domain\obj\Debug\net10.0\refint\DevTrack.Domain.dll
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Domain\obj\Debug\net10.0\DevTrack.Domain.pdb
+E:\Samiul Alim\Project\DevTrackOriginal\DevTrackOriginal\DevTrack.Domain\obj\Debug\net10.0\ref\DevTrack.Domain.dll
